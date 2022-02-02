@@ -33,6 +33,7 @@ public class Main {
 
 
     }
+import java.util.*;
 
 public class mapping {
 
@@ -58,9 +59,10 @@ public class mapping {
                 '}';
     }
 
-    public void setDanishtoenglish (String english, String danish)
+    public void setDanishtoenglish (String danish, String english)
     {
-        danishtoenglish.put(english, danish);
+        danishtoenglish.put(danish, english);
+
     }
 
     public Map<String, String> getDanishtoenglish ()
@@ -69,18 +71,25 @@ public class mapping {
 
     }
 
-    public boolean test (String danish, String english)
+    public void test (String danish, String english)
     {
 
-
+        if (english.equals("exit")){
+            System.out.println("Exiting...");
+        }
         if (!danishtoenglish.containsKey(english) || !danishtoenglish.containsValue(danish)) {
-            System.out.println("Not contained in dictionairy");
-            return false;
+            if (!(english).equals("exit"))
+            {
+                System.out.println("Not contained in dictionairy");
+            }
+            ;
         }
             if (keyfromvalue(danishtoenglish, danish).equals(english))
-            {return true;}
+            {System.out.println("true");}
+            else if (!(english).equals("exit"))
+                System.out.println("false");
 
-        return false;
+
     }
 
     public Object keyfromvalue (Map hm, Object value)
