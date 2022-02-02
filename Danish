@@ -1,0 +1,97 @@
+import java.util.*;
+import java.io.InputStream;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        mapping newmap = new mapping();
+        Scanner scan = new Scanner(System.in);
+        newmap.setDanishtoenglish("thank you", "tak");
+        newmap.setDanishtoenglish("you're welcome", "sa lidt");
+
+        System.out.println(newmap.toString());
+
+        System.out.println(newmap.test("tak", "thank you"));
+
+
+        String word = newmap.randomWord();
+        System.out.println(word);
+        String str = scan.nextLine();
+        System.out.println(newmap.test(word, str));
+
+    }
+
+    }
+
+public class mapping {
+
+    protected String english;
+    protected String danish;
+
+    Map<String, String> danishtoenglish = new HashMap<String,String>();
+
+    public mapping() {
+
+        english = "";
+
+        danish = "";
+
+    }
+
+    @Override
+    public String toString() {
+        return "mapping{" +
+                "english='" + english + '\'' +
+                ", danish='" + danish + '\'' +
+                ", danishtoenglish=" + danishtoenglish +
+                '}';
+    }
+
+    public void setDanishtoenglish (String english, String danish)
+    {
+        danishtoenglish.put(english, danish);
+    }
+
+    public Map<String, String> getDanishtoenglish ()
+    {
+        return danishtoenglish;
+
+    }
+
+    public boolean test (String danish, String english)
+    {
+
+
+        if (!danishtoenglish.containsKey(english) || !danishtoenglish.containsValue(danish)) {
+            System.out.println("Not contained in dictionairy");
+            return false;
+        }
+            if (keyfromvalue(danishtoenglish, danish).equals(english))
+            {return true;}
+
+        return false;
+    }
+
+    public Object keyfromvalue (Map hm, Object value)
+    {
+        for (Object o : hm.keySet())
+        {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
+    }
+
+    public String randomWord ()
+    {
+        Random random = new Random();
+        List<String> keys = new ArrayList<String>(danishtoenglish.keySet());
+        String randomKey = keys.get(random.nextInt(keys.size()));
+        String value = (String) danishtoenglish.get(randomKey);
+        return value;
+
+    }
+
+}
