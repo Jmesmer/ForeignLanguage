@@ -1,29 +1,44 @@
+//Author:  Josh Mesmer
+//Language: Danish
+/*This program consists of just one mapping class.  The mapping class creates a
+* hashmap of type String, String.  The hashmap sets keys to danish words/phrases and
+* sets the values of those keys to the english meaning.  The main method creates a mapping
+* object and sets its keys/values using the setDanishtoenglish method from the mapping class.
+* Main then goes through a while loop, where as long as the user does not type "exit" then
+* the loop will continue.  The mapping object in main calls the random function from mapping
+* to obtain a value from the map.  The user must type in the correct danish translation to
+* get it right.  */
+
+
+import java.util.Scanner;//imports the Scanner class to take-in user input
 import java.util.*;
-import java.io.InputStream;
+
 
 public class Main {
 
     public static void main(String[] args) {
-
+        System.out.println("Please type the English translation of the Danish word.  Type \"exit\" to end the program");
         mapping newmap = new mapping();
         Scanner scan = new Scanner(System.in);
-        newmap.setDanishtoenglish("thank you", "tak");
-        newmap.setDanishtoenglish("you're welcome", "sa lidt");
-        newmap.setDanishtoenglish("stopwatch", "stopur");
+        newmap.setDanishtoenglish("tak", "thank you");//sets the values and keys to the hashmap in mapping.
+        newmap.setDanishtoenglish("sa lidt", "you're welcome");
+        newmap.setDanishtoenglish("stopur", "stopwatch");
 
+        System.out.println(newmap.toString());//This is just to test that the toString function from mapping
+        //is working properly.
 
-        System.out.println(newmap.test("tak", "thank you"));
-        String word = "";
-        String str = "";
+        String word = "";//This String variable will be used to set a random english word to it
+        String str = "";//This String variable will be the user input.
         while (true) {
-            if (str.equals("exit"))
+            if (str.equals("exit"))//if the input string equals "exit" then the program exits the loop.
             {
                 break;
             }
-            word = newmap.randomWord();
-            System.out.println(word);
-            str = scan.nextLine();
-            System.out.println(newmap.test(word, str));
+            word = newmap.randomWord();//sets word to a random value from the mapping map.
+            System.out.println(word);//prints out the random word for the user.
+            str = scan.nextLine();//sets str to user input
+
+            newmap.test(word, str);//tests if user input is the correct translation.
 
         }
 
@@ -32,16 +47,19 @@ public class Main {
 
 
 
-    }
-import java.util.*;
+}
+
+//creates the mapping class
 
 public class mapping {
-
+    //the mapping class requires two String variables.
+    // One for an english word and one for danish word
     protected String english;
     protected String danish;
-
+    //creates the hashmap that we will place values and keys in.
     Map<String, String> danishtoenglish = new HashMap<String,String>();
 
+    //the constructor just sets english and danish to empty strings.
     public mapping() {
 
         english = "";
@@ -49,7 +67,8 @@ public class mapping {
         danish = "";
 
     }
-
+    //Overrides the default toString() method to print out the hashmap in a more
+    //readable format.
     @Override
     public String toString() {
         return "mapping{" +
@@ -59,9 +78,10 @@ public class mapping {
                 '}';
     }
 
+    //sets the danish and english words to the hashmap.
     public void setDanishtoenglish (String danish, String english)
     {
-        danishtoenglish.put(danish, english);
+        danishtoenglish.put(english, danish);
 
     }
 
@@ -70,30 +90,36 @@ public class mapping {
         return danishtoenglish;
 
     }
-
+    //creates a test function that takes in two strings.  One for a danish word and one for an english word.
+    //it is important to note that this function does not return a boolean value.  It only prints out "true/false."
     public void test (String danish, String english)
     {
-
+        //if user types "exit" then the program will print "Exiting..."
         if (english.equals("exit")){
             System.out.println("Exiting...");
         }
+        //if the user input is not within the dictionary, then the function will print "Not contained in dictionary"
         if (!danishtoenglish.containsKey(english) || !danishtoenglish.containsValue(danish)) {
             if (!(english).equals("exit"))
             {
-                System.out.println("Not contained in dictionairy");
+                System.out.println("Not contained in dictionary");
             }
-            ;
+
         }
+        //if the user input is the correct value, then print "true"
             if (keyfromvalue(danishtoenglish, danish).equals(english))
             {System.out.println("true");}
+            //else if the user input is incorrect, then print "false"
             else if (!(english).equals("exit"))
                 System.out.println("false");
 
 
     }
-
+    //creates the keyfromvalue function, which is a workaround within the hashmap class to obtain the
+    //value of the key, instead of obtaining a value from a key.  It takes in a hashmap and a value
     public Object keyfromvalue (Map hm, Object value)
     {
+        //for all instances of object within the hashmap keyset, return the value of the key
         for (Object o : hm.keySet())
         {
             if (hm.get(o).equals(value)) {
@@ -102,7 +128,8 @@ public class mapping {
         }
         return null;
     }
-
+    //creates the randomWord function, which is essential for the test function.  It returns a random key from
+    //a hashmap.
     public String randomWord ()
     {
         Random random = new Random();
