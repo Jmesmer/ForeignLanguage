@@ -9,18 +9,28 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         newmap.setDanishtoenglish("thank you", "tak");
         newmap.setDanishtoenglish("you're welcome", "sa lidt");
+        newmap.setDanishtoenglish("stopwatch", "stopur");
 
-        System.out.println(newmap.toString());
 
         System.out.println(newmap.test("tak", "thank you"));
+        String word = "";
+        String str = "";
+        while (true) {
+            if (str.equals("exit"))
+            {
+                break;
+            }
+            word = newmap.randomWord();
+            System.out.println(word);
+            str = scan.nextLine();
+            System.out.println(newmap.test(word, str));
 
-
-        String word = newmap.randomWord();
-        System.out.println(word);
-        String str = scan.nextLine();
-        System.out.println(newmap.test(word, str));
+        }
 
     }
+
+
+
 
     }
 
